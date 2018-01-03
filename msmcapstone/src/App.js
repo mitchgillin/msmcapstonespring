@@ -6,9 +6,16 @@ import About from "./About.js";
 import Login from "./Login.js";
 import Register from "./Register.js";
 import { Form, Icon, Input, Button } from 'antd';
-
+import DataInput from "./DataInput.js"
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      password: ""
+    }
+  }
   render() {
     return (
 
@@ -18,6 +25,7 @@ class App extends Component {
           <Route exact path='/about' component={About} />
           <Route exact path='/login' component={Login} />
           <Route exact path='/register' component={Register} />
+          <Route exact path='/datainput' component={DataInput} />
         </Switch>
       </div>
     );

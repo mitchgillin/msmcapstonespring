@@ -1,11 +1,11 @@
 import firebase from 'firebase'
 const config = {
-  apiKey: "AIzaSyDblTESEB1SbAVkpy2q39DI2OHphL2-Jxw",
-  authDomain: "fun-food-friends-eeec7.firebaseapp.com",
-  databaseURL: "https://fun-food-friends-eeec7.firebaseio.com",
-  projectId: "fun-food-friends-eeec7",
-  storageBucket: "fun-food-friends-eeec7.appspot.com",
-  messagingSenderId: "144750278413"
+  apiKey: "AIzaSyBs_wb2cGb3raHkpaMt0B0juR0VDkbQFVM",
+  authDomain: "msmemr-e15f2.firebaseapp.com",
+  databaseURL: "https://msmemr-e15f2.firebaseio.com",
+  projectId: "msmemr-e15f2",
+  storageBucket: "msmemr-e15f2.appspot.com",
+  messagingSenderId: "774847830157"
 };
 firebase.initializeApp(config);
 export default firebase;

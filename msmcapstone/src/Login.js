@@ -1,6 +1,9 @@
 import React from "react";
 import MyHeader from "./MyHeader.js"
 import { Form, Icon, Input, Button } from 'antd';
+import {
+  Link
+} from 'react-router-dom'
 const FormItem = Form.Item;
 
 function hasErrors(fieldsError) {
@@ -60,7 +63,7 @@ class Login extends React.Component {
             >
               Log in
           </Button>
-            Or <a href="/register">register now!</a>
+            Or <Link as="/register"> Register Now! </Link>
           </FormItem>
         </Form>
       </div>
