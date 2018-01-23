@@ -5,7 +5,6 @@ import Welcome from "./Welcome.js";
 import About from "./About.js";
 import Login from "./Login.js";
 import Register from "./Register.js";
-import { Form, Icon, Input, Button } from 'antd';
 import DataInput from "./DataInput.js"
 
 class App extends Component {

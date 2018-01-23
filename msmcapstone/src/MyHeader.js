@@ -1,12 +1,9 @@
 import React from "react";
-import { Layout, Menu } from 'antd';
-import { Icon } from 'antd';
-import Welcome from "./Welcome.js"
+import { Menu } from 'antd';
 import 'antd/dist/antd.css'
 import {
   Link
 } from 'react-router-dom'
-const { Header } = Layout;
 
 function MyHeader(props) {
   return (

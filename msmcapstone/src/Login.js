@@ -1,9 +1,7 @@
 import React from "react";
 import MyHeader from "./MyHeader.js"
 import { Form, Icon, Input, Button } from 'antd';
-import {
-  Link
-} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 const FormItem = Form.Item;
 
 function hasErrors(fieldsError) {
@@ -63,7 +61,7 @@ class Login extends React.Component {
             >
               Log in
           </Button>
-            Or <Link as="/register"> Register Now! </Link>
+            Or <Link to="/register"> Register Now! </Link>
           </FormItem>
         </Form>
       </div>
@@ -71,6 +69,4 @@ class Login extends React.Component {
   }
 }
 
-const Login2 = Form.create()(Login);
-
-export default Login2;
+export default Form.create()(Login)

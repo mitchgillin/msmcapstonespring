@@ -1,19 +1,22 @@
 import React from "react";
-import App from "./App.js"
 import MyHeader from "./MyHeader"
-import { Form, Input, Button, Radio, Table, Icon, Divider } from 'antd';
+import { Form, Input, Button, Radio, Table } from 'antd';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 
 
 const columns = [{
-  title: 'Treatment',
+  title: 'Medications',
   dataIndex: 'medications',
   key: 'medications',
 }, {
   title: 'Taken',
   dataIndex: 'hasTaken',
   key: 'hasTaken',
+  filters: [
+    { text: 'Taken', value: "yes" },
+    { text: 'Not Taken', value: "no" },
+  ],
 }];
 
 
@@ -55,7 +58,6 @@ export default class DataInput extends React.Component {
 
 
   handleRadioChange = (e) => {
-    console.log(e.target.value);
     this.setState({ takenValue: e.target.value })
   }
 
