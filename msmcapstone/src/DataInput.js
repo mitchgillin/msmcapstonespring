@@ -5,26 +5,15 @@ import { Form, Input, Button, Radio, Table, Icon, Divider } from 'antd';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 
-const dataSource = [{
-  key: '1',
-  name: 'Mike',
-  age: 32,
-  address: '10 Downing Street'
-}, {
-  key: '2',
-  name: 'John',
-  age: 42,
-  address: '10 Downing Street'
-}];
 
 const columns = [{
   title: 'Treatment',
-  dataIndex: 'treatment',
-  key: 'treatment',
+  dataIndex: 'medications',
+  key: 'medications',
 }, {
   title: 'Taken',
-  dataIndex: 'taken',
-  key: 'taken',
+  dataIndex: 'hasTaken',
+  key: 'hasTaken',
 }];
 
 
@@ -33,10 +22,11 @@ export default class DataInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      dataList: [],
       medications: []
       , taken: [],
       newMed: "",
-      takenValue: null
+      takenValue: ""
     }
   }
 
@@ -46,9 +36,16 @@ export default class DataInput extends React.Component {
     newMedications.push(this.state.newMed);
     var newTaken = this.state.taken.slice();
     newTaken.push(this.state.takenValue);
+    var newDataList = this.state.dataList.slice();
+    newDataList.push({
+      medications: this.state.newMed,
+      hasTaken: this.state.takenValue,
+      key: this.state.newMed + Math.floor(Math.random() * 1000)
+    });
     this.setState({
       medications: newMedications,
-      taken: newTaken
+      taken: newTaken,
+      dataList: newDataList
     })
   }
 
@@ -67,16 +64,14 @@ export default class DataInput extends React.Component {
       <div>
         <MyHeader />
         <div className="Input Field">
-          {this.state.medications}
-          <p> {this.state.taken.toString()} </p>
           <Form layout="inline" onSubmit={(e) => this.handleSubmit(e)}>
             <FormItem>
               <Input placeholder="Medicaiton" onChange={this.handleChange} />
             </FormItem>
             <FormItem>
               <RadioGroup onChange={(e) => this.handleRadioChange(e)} >
-                <Radio value={true} > I have taken this today </Radio>
-                <Radio value={false} > I haven't taken this today </Radio>
+                <Radio value={"yes"} > I have taken this today </Radio>
+                <Radio value={"no"} > I haven't taken this today </Radio>
               </RadioGroup>
             </FormItem>
             <FormItem>
@@ -89,7 +84,7 @@ export default class DataInput extends React.Component {
 
 
         </div>
-        <Table dataSource={dataSource} columns={columns} />
+        <Table dataSource={this.state.dataList} columns={columns} />
 
       </div>
     )
