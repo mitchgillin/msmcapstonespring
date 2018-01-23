@@ -1,15 +1,40 @@
 import React from "react";
 import App from "./App.js"
 import MyHeader from "./MyHeader"
-import { Form, Input, Button, Radio } from 'antd';
+import { Form, Input, Button, Radio, Table, Icon, Divider } from 'antd';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
+
+const dataSource = [{
+  key: '1',
+  name: 'Mike',
+  age: 32,
+  address: '10 Downing Street'
+}, {
+  key: '2',
+  name: 'John',
+  age: 42,
+  address: '10 Downing Street'
+}];
+
+const columns = [{
+  title: 'Treatment',
+  dataIndex: 'treatment',
+  key: 'treatment',
+}, {
+  title: 'Taken',
+  dataIndex: 'taken',
+  key: 'taken',
+}];
+
+
+
 export default class DataInput extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      medications: ["advil"]
-      , taken: [true],
+      medications: []
+      , taken: [],
       newMed: "",
       takenValue: null
     }
@@ -20,7 +45,7 @@ export default class DataInput extends React.Component {
     var newMedications = this.state.medications.slice();
     newMedications.push(this.state.newMed);
     var newTaken = this.state.taken.slice();
-    newTaken.push(this.state.newTaken);
+    newTaken.push(this.state.takenValue);
     this.setState({
       medications: newMedications,
       taken: newTaken
@@ -61,7 +86,11 @@ export default class DataInput extends React.Component {
               </Button>
             </FormItem>
           </Form>
+
+
         </div>
+        <Table dataSource={dataSource} columns={columns} />
+
       </div>
     )
   }
