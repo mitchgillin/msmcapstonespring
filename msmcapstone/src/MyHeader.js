@@ -16,6 +16,7 @@ function MyHeader(props) {
         <Menu.Item key="1" > <Link to="./about"> About </Link>  </Menu.Item>
         <Menu.Item key="2" > <Link to="./login"> Login </Link> </Menu.Item>
         <Menu.Item key="3" > <Link to="./datainput"> Data Input </Link> </Menu.Item>
+        <Menu.Item key="4" > <Link to="./firebasetest" > FirebaseTest </Link> </Menu.Item>
       </Menu>
     </div>
   )

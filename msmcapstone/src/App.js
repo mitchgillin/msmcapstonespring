@@ -6,6 +6,7 @@ import About from "./About.js";
 import Login from "./Login.js";
 import Register from "./Register.js";
 import DataInput from "./DataInput.js"
+import FirebaseTest from "./FirebaseTest.js"
 
 class App extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class App extends Component {
           <Route exact path='/login' component={Login} />
           <Route exact path='/register' component={Register} />
           <Route exact path='/datainput' component={DataInput} />
+          <Route exact path='/firebasetest' component={FirebaseTest} />
         </Switch>
       </div>
     );
