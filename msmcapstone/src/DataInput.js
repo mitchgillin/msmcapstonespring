@@ -1,6 +1,7 @@
 import React from "react";
 import MyHeader from "./MyHeader"
 import { Form, Input, Button, Radio, Table } from 'antd';
+import firebase from "./firebase.js"
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 
@@ -53,9 +54,10 @@ export default class DataInput extends React.Component {
   }
 
   handleChange = (e) => {
-    this.setState({ newMed: e.target.value })
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
-
 
   handleRadioChange = (e) => {
     this.setState({ takenValue: e.target.value })
@@ -68,10 +70,10 @@ export default class DataInput extends React.Component {
         <div className="Input Field">
           <Form layout="inline" onSubmit={(e) => this.handleSubmit(e)}>
             <FormItem>
-              <Input placeholder="Medicaiton" onChange={this.handleChange} />
+              <Input name="newMed" placeholder="Medicaiton" onChange={this.handleChange} />
             </FormItem>
             <FormItem>
-              <RadioGroup onChange={(e) => this.handleRadioChange(e)} >
+              <RadioGroup name="takenValue" onChange={(e) => this.handleChange(e)} >
                 <Radio value={"yes"} > I have taken this today </Radio>
                 <Radio value={"no"} > I haven't taken this today </Radio>
               </RadioGroup>

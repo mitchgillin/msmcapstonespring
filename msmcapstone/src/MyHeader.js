@@ -1,9 +1,8 @@
 import React from "react";
 import { Menu } from 'antd';
 import 'antd/dist/antd.css'
-import {
-  Link
-} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import Loginout from "./Loginout.js"
 
 function MyHeader(props) {
   return (
@@ -14,9 +13,9 @@ function MyHeader(props) {
         mode="horizontal"
         style={{ lineHeight: "48px", textAlign: "right" }}>
         <Menu.Item key="1" > <Link to="./about"> About </Link>  </Menu.Item>
-        <Menu.Item key="2" > <Link to="./login"> Login </Link> </Menu.Item>
         <Menu.Item key="3" > <Link to="./datainput"> Data Input </Link> </Menu.Item>
         <Menu.Item key="4" > <Link to="./firebasetest" > FirebaseTest </Link> </Menu.Item>
+        <Menu.Item key="5" > <Loginout /> </Menu.Item>
       </Menu>
     </div>
   )

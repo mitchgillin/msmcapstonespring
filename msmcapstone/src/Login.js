@@ -2,6 +2,7 @@ import React from "react";
 import MyHeader from "./MyHeader.js"
 import { Form, Icon, Input, Button } from 'antd';
 import { Link } from 'react-router-dom'
+import firebase, { auth, provider } from './firebase.js';
 const FormItem = Form.Item;
 
 function hasErrors(fieldsError) {
@@ -11,17 +12,58 @@ function hasErrors(fieldsError) {
 
 class Login extends React.Component {
 
+
+  constructor() {
+    super();
+    this.state = {
+      username: "",
+      password: "",
+      users: [],
+    }
+  }
+
   componentDidMount() {
     this.props.form.validateFields();
+    const usersRef = firebase.database().ref("users");
+    usersRef.on("value", (snapshot) => {
+      let users = snapshot.val();
+      let newState = [];
+      for (let user in users) {
+        newState.push({
+          id: user,
+          title: users[user].title,
+          user: users[user].user
+        });
+      }
+      this.setState({
+        items: newState
+      });
+    });
+    console.log(this.state)
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Recieved: ', values);
+        const usersRef = firebase.database().ref("users");
+        const user = {
+          username: this.state.username,
+          password: this.state.password
+        }
+        usersRef.push(user);
+        this.setState({
+          username: "",
+          password: ""
+        })
       }
     });
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
 
   render() {
@@ -40,7 +82,7 @@ class Login extends React.Component {
             {getFieldDecorator('userName', {
               rules: [{ required: true, message: 'Please input your username!' }],
             })(
-              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
+              <Input onChange={this.handleChange} name="username" prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
               )}
           </FormItem>
           <FormItem
@@ -50,7 +92,7 @@ class Login extends React.Component {
             {getFieldDecorator('password', {
               rules: [{ required: true, message: 'Please input your Password!' }],
             })(
-              <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
+              <Input onChange={this.handleChange} name="password" prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
               )}
           </FormItem>
           <FormItem>
