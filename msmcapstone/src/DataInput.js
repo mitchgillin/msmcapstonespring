@@ -1,7 +1,8 @@
 import React from "react";
 import MyHeader from "./MyHeader"
 import { Form, Input, Button, Radio, Table } from 'antd';
-import firebase from "./firebase.js"
+import { auth } from './firebase.js';
+
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 
@@ -30,7 +31,8 @@ export default class DataInput extends React.Component {
       medications: []
       , taken: [],
       newMed: "",
-      takenValue: ""
+      takenValue: "",
+      user: null
     }
   }
 
@@ -63,7 +65,20 @@ export default class DataInput extends React.Component {
     this.setState({ takenValue: e.target.value })
   }
 
+
+  componentDidMount() {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ user })
+      }
+    })
+  }
+
   render() {
+
+
+
+
     return (
       <div>
         <MyHeader />

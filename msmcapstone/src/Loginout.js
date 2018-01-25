@@ -1,9 +1,9 @@
 
 import React from "react";
 import { Button } from "antd"
-import firebase, { auth, provider } from './firebase.js';
-
+import { auth, provider } from './firebase.js';
 export default class Logininout extends React.Component {
+
 
 
   constructor() {
@@ -22,8 +22,14 @@ export default class Logininout extends React.Component {
     })
   }
 
+
+
+
+
   logout = () => {
     auth.signOut().then(() => { this.setState({ user: null }) })
+
+
   }
 
   login = () => {
@@ -37,6 +43,9 @@ export default class Logininout extends React.Component {
   }
 
   render() {
+
+
+
     return (
       <div>
         {this.state.user ?

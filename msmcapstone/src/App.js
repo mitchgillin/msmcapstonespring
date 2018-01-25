@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import { Switch, Route } from 'react-router-dom'
 import Welcome from "./Welcome.js";
@@ -8,18 +8,13 @@ import Register from "./Register.js";
 import DataInput from "./DataInput.js"
 import FirebaseTest from "./FirebaseTest.js"
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      password: ""
-    }
-  }
+class App extends React.Component {
+
   render() {
     return (
 
-      <div className="App">
+
+      < div className="App" >
         <Switch>
           <Route exact path='/' component={Welcome} />
           <Route exact path='/about' component={About} />
@@ -28,7 +23,7 @@ class App extends Component {
           <Route exact path='/datainput' component={DataInput} />
           <Route exact path='/firebasetest' component={FirebaseTest} />
         </Switch>
-      </div>
+      </div >
     );
   }
 }
