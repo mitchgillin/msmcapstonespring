@@ -1,7 +1,7 @@
 import React from "react";
 import MyHeader from "./MyHeader"
 import { Form, Input, Button, Radio, Table } from 'antd';
-import { auth } from './firebase.js';
+import firebase, { auth } from './firebase.js';
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
@@ -36,6 +36,7 @@ export default class DataInput extends React.Component {
     }
   }
 
+
   handleSubmit = (e) => {
     e.preventDefault();
     var newMedications = this.state.medications.slice();
@@ -53,6 +54,15 @@ export default class DataInput extends React.Component {
       taken: newTaken,
       dataList: newDataList
     })
+    const usersRef = firebase.database().ref(this.state.user.id);
+
+    usersRef.set({
+      "treatments": {
+        "name": this.state.newMed,
+        taken: this.state.takenValue
+      }
+    });
+
   }
 
   handleChange = (e) => {
@@ -71,6 +81,7 @@ export default class DataInput extends React.Component {
       if (user) {
         this.setState({ user })
       }
+      else { this.setState({ dataList: [] }) }
     })
   }
 
