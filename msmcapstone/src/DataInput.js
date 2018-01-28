@@ -1,7 +1,7 @@
 import React from "react";
 import MyHeader from "./MyHeader"
 import { Form, Input, Button, Radio, Table } from 'antd';
-import firebase, { auth } from './firebase.js';
+import firebase, { auth } from './Firebase.js';
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;

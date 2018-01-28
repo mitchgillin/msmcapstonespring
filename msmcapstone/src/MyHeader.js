@@ -3,7 +3,7 @@ import { Menu } from 'antd';
 import 'antd/dist/antd.css'
 import { Link } from 'react-router-dom'
 import Loginout from "./Loginout.js"
-import { auth } from "./firebase.js"
+import { auth } from "./Firebase.js"
 
 
 

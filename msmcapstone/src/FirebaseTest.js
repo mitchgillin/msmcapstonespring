@@ -1,6 +1,6 @@
 import React from "react";
 import MyHeader from "./MyHeader"
-import firebase from "./firebase.js"
+import firebase from "./Firebase.js"
 export default class FirebaseTest extends React.Component {
 
   constructor(props) {

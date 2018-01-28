@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "antd"
-import { auth, provider } from './firebase.js';
+import { auth, provider } from './Firebase.js';
 export default class Logininout extends React.Component {
 
 

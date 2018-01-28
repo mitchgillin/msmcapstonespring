@@ -2,7 +2,7 @@ import React from "react";
 import MyHeader from "./MyHeader.js"
 import { Form, Icon, Input, Button } from 'antd';
 import { Link } from 'react-router-dom'
-import firebase from './firebase.js';
+import firebase from './Firebase.js';
 const FormItem = Form.Item;
 
 function hasErrors(fieldsError) {
