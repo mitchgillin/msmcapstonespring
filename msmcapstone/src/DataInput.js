@@ -54,11 +54,10 @@ export default class DataInput extends React.Component {
       taken: newTaken,
       dataList: newDataList
     })
-    const usersRef = firebase.database().ref(this.state.user.id);
-
-    usersRef.set({
-      "treatments": {
-        "name": this.state.newMed,
+    const usersRef = firebase.database().ref(this.state.user.displayName);
+    usersRef.push().set({
+      treatment: {
+        name: this.state.newMed,
         taken: this.state.takenValue
       }
     });
