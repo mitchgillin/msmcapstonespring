@@ -21,7 +21,17 @@ const columns = [{
   ],
 }];
 
+export const snapshotToArray = snapshot => {
+  let returnArr = [];
 
+  snapshot.forEach(childSnapshot => {
+    let item = childSnapshot.val();
+    item.key = childSnapshot.key;
+    returnArr.push(item);
+  });
+
+  return returnArr;
+};
 
 export default class DataInput extends React.Component {
   constructor(props) {
@@ -35,6 +45,10 @@ export default class DataInput extends React.Component {
       user: null
     }
   }
+
+
+
+
 
 
   handleSubmit = (e) => {
@@ -58,7 +72,8 @@ export default class DataInput extends React.Component {
     usersRef.push().set({
       treatment: {
         name: this.state.newMed,
-        taken: this.state.takenValue
+        taken: this.state.takenValue,
+        key: Math.random() * 100000
       }
     });
 
@@ -70,19 +85,36 @@ export default class DataInput extends React.Component {
     })
   }
 
-  handleRadioChange = (e) => {
-    this.setState({ takenValue: e.target.value })
-  }
-
 
   componentDidMount() {
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.setState({ user })
+        const usersRef = firebase.database().ref(this.state.user.displayName).child("-L3yaAhhADI2FSv82r8r")
+        usersRef.on("value", (snapshot) => {
+          console.log(snapshot.val())
+          // console.log(snapshotToArray(snapshot))
+
+          var tempSnap = snapshot.val();
+          var tempArray = [];
+          for (var treatment in tempSnap) {
+            let tempshit = snapshot.child("treatment").val;
+            tempArray.push(tempshit)
+            console.log(tempshit)
+          }
+          this.setState({ dataList: tempArray })
+          console.log(tempArray);
+
+        })
       }
       else { this.setState({ dataList: [] }) }
     })
+
+
   }
+
+
+
 
   render() {
 

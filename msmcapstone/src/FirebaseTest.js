@@ -18,7 +18,7 @@ export default class FirebaseTest extends React.Component {
       let users = snapshot.val();
       for (let user in users) {
         newState.push({
-          user: users[user].username
+          user: users[user]
         });
       }
       this.setState({
