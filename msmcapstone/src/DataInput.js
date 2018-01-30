@@ -5,7 +5,7 @@ import firebase, { auth } from './Firebase.js';
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
-
+const now = new Date();
 
 const columns = [{
   title: 'Medications',
@@ -15,11 +15,13 @@ const columns = [{
   title: 'Taken',
   dataIndex: 'hasTaken',
   key: 'hasTaken',
-  filters: [
-    { text: 'Taken', value: "yes" },
-    { text: 'Not Taken', value: "no" },
-  ],
-}];
+},
+{
+  title: "Date",
+  dataIndex: "date",
+  key: "date"
+}
+];
 
 export const snapshotToArray = snapshot => {
   let returnArr = [];
@@ -73,7 +75,8 @@ export default class DataInput extends React.Component {
       treatment: {
         name: this.state.newMed,
         taken: this.state.takenValue,
-        key: Math.random() * 100000
+        key: Math.random() * 100000,
+        date: now.toDateString()
       }
     });
 
@@ -87,24 +90,33 @@ export default class DataInput extends React.Component {
 
 
   componentDidMount() {
+    console.log(typeof now);
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.setState({ user })
-        const usersRef = firebase.database().ref(this.state.user.displayName).child("-L3yaAhhADI2FSv82r8r")
+        const usersRef = firebase.database().ref(this.state.user.displayName)
         usersRef.on("value", (snapshot) => {
-          console.log(snapshot.val())
-          // console.log(snapshotToArray(snapshot))
+          // console.log(snapshot.val())
+          if ((snapshot.val()) != null) {
+            const rows = Object.values(snapshot.val())
+            var tempSnap = snapshot.val();
+            var tempArray = [];
+            for (var x in tempSnap) {
+              for (var t in tempSnap[x]) {
+                console.log(tempSnap[x][t].name)
+                tempArray.push({
+                  medications: tempSnap[x][t].name,
+                  hasTaken: tempSnap[x][t].taken,
+                  key: tempSnap[x][t].key,
+                  date: tempSnap[x][t].date
+                })
+                console.log(tempArray);
+                this.setState({ dataList: tempArray })
 
-          var tempSnap = snapshot.val();
-          var tempArray = [];
-          for (var treatment in tempSnap) {
-            let tempshit = snapshot.child("treatment").val;
-            tempArray.push(tempshit)
-            console.log(tempshit)
+              }
+
+            }
           }
-          this.setState({ dataList: tempArray })
-          console.log(tempArray);
-
         })
       }
       else { this.setState({ dataList: [] }) }
@@ -146,7 +158,6 @@ export default class DataInput extends React.Component {
 
         </div>
         <Table dataSource={this.state.dataList} columns={columns} />
-
       </div>
     )
   }
