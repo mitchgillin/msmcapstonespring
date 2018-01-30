@@ -38,8 +38,7 @@ class MyHeader extends React.Component {
             < Menu.Item key="3" > <Link to="./datainput"> Data Input </Link> </Menu.Item>
           )
             : null}
-          <Menu.Item key="4" > <Link to="./firebasetest" > FirebaseTest </Link> </Menu.Item>
-          <Menu.Item key="5" > <Loginout /> </Menu.Item>
+          <Menu.Item key="4" > <Loginout /> </Menu.Item>
         </Menu>
       </div>
     )
