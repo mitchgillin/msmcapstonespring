@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'; 
 import Welcome from "./Welcome.js";
 import About from "./About.js";
 import Login from "./Login.js";
-import DataInput from "./DataInput.js"
+import DataInput from "./DataInput.js";
 
 class App extends React.Component {
 
