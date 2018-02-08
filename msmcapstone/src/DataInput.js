@@ -1,7 +1,8 @@
 import React from "react";
-import MyHeader from "./MyHeader"
+import MyHeader from "./MyHeader";
 import { Form, Input, Button, Radio, Table } from 'antd';
 import firebase, { auth } from './Firebase.js';
+import TreatmentButtonList from "./TreatmentButtonList.js";
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
@@ -10,11 +11,11 @@ const now = new Date();
 const columns = [{
   title: 'Medications',
   dataIndex: 'medications',
-  key: 'medications',
+  key: 'medications'
 }, {
   title: 'Taken',
   dataIndex: 'hasTaken',
-  key: 'hasTaken',
+  key: 'hasTaken'
 },
 {
   title: "Date",
@@ -45,9 +46,8 @@ export default class DataInput extends React.Component {
       newMed: "",
       takenValue: "",
       user: null
-    }
+    };
   }
-
 
 
 
@@ -69,7 +69,7 @@ export default class DataInput extends React.Component {
       medications: newMedications,
       taken: newTaken,
       dataList: newDataList
-    })
+    });
     const usersRef = firebase.database().ref(this.state.user.displayName);
     usersRef.push().set({
       treatment: {
@@ -79,48 +79,43 @@ export default class DataInput extends React.Component {
         date: now.toDateString()
       }
     });
-
+    document.getElementById("myForm").reset();
   }
 
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
-    })
+    });
   }
 
 
   componentDidMount() {
-    console.log(typeof now);
     auth.onAuthStateChanged((user) => {
       if (user) {
-        this.setState({ user })
-        const usersRef = firebase.database().ref(this.state.user.displayName)
+        this.setState({ user });
+        const usersRef = firebase.database().ref(this.state.user.displayName);
         usersRef.on("value", (snapshot) => {
-          // console.log(snapshot.val())
           if ((snapshot.val()) != null) {
-            const rows = Object.values(snapshot.val())
             var tempSnap = snapshot.val();
             var tempArray = [];
             for (var x in tempSnap) {
               for (var t in tempSnap[x]) {
-                console.log(tempSnap[x][t].name)
-                tempArray.push({
-                  medications: tempSnap[x][t].name,
-                  hasTaken: tempSnap[x][t].taken,
-                  key: tempSnap[x][t].key,
-                  date: tempSnap[x][t].date
-                })
-                console.log(tempArray);
-                this.setState({ dataList: tempArray })
-
+                if (t === "treatment") {
+                  tempArray.push({
+                    medications: tempSnap[x][t].name,
+                    hasTaken: tempSnap[x][t].taken,
+                    key: tempSnap[x][t].key,
+                    date: tempSnap[x][t].date
+                  });
+                  this.setState({ dataList: tempArray });
+                }
               }
-
             }
           }
-        })
+        });
       }
-      else { this.setState({ dataList: [] }) }
-    })
+      else { this.setState({ dataList: [] }); }
+    });
 
 
   }
@@ -129,15 +124,11 @@ export default class DataInput extends React.Component {
 
 
   render() {
-
-
-
-
     return (
       <div>
         <MyHeader />
         <div className="Input Field">
-          <Form layout="inline" onSubmit={(e) => this.handleSubmit(e)}>
+          <Form layout="inline" onSubmit={(e) => this.handleSubmit(e)} id="myForm">
             <FormItem>
               <Input name="newMed" placeholder="Medicaiton" onChange={this.handleChange} />
             </FormItem>
@@ -155,11 +146,13 @@ export default class DataInput extends React.Component {
             </FormItem>
           </Form>
 
-
+          <div>
+            <TreatmentButtonList />
+          </div>
         </div>
         <Table dataSource={this.state.dataList} columns={columns} />
       </div>
-    )
+    );
   }
 
 }
