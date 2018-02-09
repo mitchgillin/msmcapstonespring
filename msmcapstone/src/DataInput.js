@@ -10,12 +10,12 @@ const now = new Date();
 
 const columns = [{
   title: 'Medications',
-  dataIndex: 'medications',
-  key: 'medications'
+  dataIndex: 'name',
+  key: 'name'
 }, {
   title: 'Taken',
-  dataIndex: 'hasTaken',
-  key: 'hasTaken'
+  dataIndex: 'taken',
+  key: 'taken'
 },
 {
   title: "Date",
@@ -63,21 +63,33 @@ export default class DataInput extends React.Component {
     newDataList.push({
       medications: this.state.newMed,
       hasTaken: this.state.takenValue,
-      key: this.state.newMed + Math.floor(Math.random() * 1000)
+      key: this.state.newMed + Math.floor(Math.random() * 1000),
+      date: now.toDateString()
     });
     this.setState({
-      medications: newMedications,
-      taken: newTaken,
       dataList: newDataList
     });
     const usersRef = firebase.database().ref(this.state.user.displayName);
-    usersRef.push().set({
-      treatment: {
-        name: this.state.newMed,
-        taken: this.state.takenValue,
-        key: Math.random() * 100000,
-        date: now.toDateString()
+    var firebaseData = [];
+    usersRef.on("value", (snapshot) => {
+      if ((snapshot.val()) != null) {
+        // console.log("Snapshot.val()", snapshot.val())
       }
+    }
+    )
+    firebaseData.push({
+      name: this.state.newMed,
+      taken: this.state.takenValue,
+      key: Math.random() * 100000,
+      date: now.toDateString()
+    })
+    // console.log(firebaseData);
+    usersRef.child('treatments').push({
+      // treatment: firebaseData
+      name: this.state.newMed,
+      taken: this.state.takenValue,
+      key: Math.random() * 100000,
+      date: now.toDateString()
     });
     document.getElementById("myForm").reset();
   }
@@ -90,33 +102,36 @@ export default class DataInput extends React.Component {
 
 
   componentDidMount() {
+    var tempDataList = [];
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.setState({ user });
-        const usersRef = firebase.database().ref(this.state.user.displayName);
+        const usersRef = firebase.database().ref(this.state.user.displayName + "/treatments");
         usersRef.on("value", (snapshot) => {
           if ((snapshot.val()) != null) {
-            var tempSnap = snapshot.val();
-            var tempArray = [];
-            for (var x in tempSnap) {
-              for (var t in tempSnap[x]) {
-                if (t === "treatment") {
-                  tempArray.push({
-                    medications: tempSnap[x][t].name,
-                    hasTaken: tempSnap[x][t].taken,
-                    key: tempSnap[x][t].key,
-                    date: tempSnap[x][t].date
-                  });
-                  this.setState({ dataList: tempArray });
-                }
-              }
-            }
+            tempDataList = [];
+            snapshot.forEach(function (childSnapshot) {
+              // console.log(childSnapshot.val().name);
+              tempDataList.push({
+                name: childSnapshot.val().name,
+                taken: childSnapshot.val().taken,
+                date: childSnapshot.val().date,
+                key: childSnapshot.val().key
+
+              })
+            })
           }
+          this.setState({
+            dataList: tempDataList
+          })
+          console.log(tempDataList);
+
         });
       }
-      else { this.setState({ dataList: [] }); }
     });
-
+    this.setState({
+      dataList: tempDataList
+    })
 
   }
 
@@ -150,6 +165,7 @@ export default class DataInput extends React.Component {
             <TreatmentButtonList />
           </div>
         </div>
+        {this.state.dataList.name}
         <Table dataSource={this.state.dataList} columns={columns} />
       </div>
     );
