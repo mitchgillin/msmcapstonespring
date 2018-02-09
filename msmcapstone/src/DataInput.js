@@ -24,18 +24,6 @@ const columns = [{
 }
 ];
 
-export const snapshotToArray = snapshot => {
-  let returnArr = [];
-
-  snapshot.forEach(childSnapshot => {
-    let item = childSnapshot.val();
-    item.key = childSnapshot.key;
-    returnArr.push(item);
-  });
-
-  return returnArr;
-};
-
 export default class DataInput extends React.Component {
   constructor(props) {
     super(props);
@@ -53,7 +41,7 @@ export default class DataInput extends React.Component {
 
 
 
-  handleSubmit = (e) => {
+  handleSubmitTreatment = (e) => {
     e.preventDefault();
     var newMedications = this.state.medications.slice();
     newMedications.push(this.state.newMed);
@@ -70,19 +58,12 @@ export default class DataInput extends React.Component {
       dataList: newDataList
     });
     const usersRef = firebase.database().ref(this.state.user.displayName);
-    var firebaseData = [];
     usersRef.on("value", (snapshot) => {
       if ((snapshot.val()) != null) {
         // console.log("Snapshot.val()", snapshot.val())
       }
     }
     )
-    firebaseData.push({
-      name: this.state.newMed,
-      taken: this.state.takenValue,
-      key: Math.random() * 100000,
-      date: now.toDateString()
-    })
     // console.log(firebaseData);
     usersRef.child('treatments').push({
       // treatment: firebaseData
@@ -93,6 +74,19 @@ export default class DataInput extends React.Component {
     });
     document.getElementById("myForm").reset();
   }
+
+
+  handleQuickAdd = (name) => {
+    const usersRef = firebase.database().ref(this.state.user.displayName);
+    console.log(name);
+    usersRef.child('treatments').push({
+      name: name,
+      taken: "yes",
+      key: Math.random() * 100000,
+      date: now.toDateString()
+    });
+  }
+
 
   handleChange = (e) => {
     this.setState({
@@ -117,22 +111,19 @@ export default class DataInput extends React.Component {
                 taken: childSnapshot.val().taken,
                 date: childSnapshot.val().date,
                 key: childSnapshot.val().key
-
               })
             })
           }
           this.setState({
             dataList: tempDataList
           })
-          console.log(tempDataList);
-
+          // console.log(tempDataList);
         });
       }
     });
     this.setState({
       dataList: tempDataList
     })
-
   }
 
 
@@ -143,7 +134,7 @@ export default class DataInput extends React.Component {
       <div>
         <MyHeader />
         <div className="Input Field">
-          <Form layout="inline" onSubmit={(e) => this.handleSubmit(e)} id="myForm">
+          <Form layout="inline" onSubmit={(e) => this.handleSubmitTreatment(e)} id="myForm">
             <FormItem>
               <Input name="newMed" placeholder="Medicaiton" onChange={this.handleChange} />
             </FormItem>
@@ -162,10 +153,9 @@ export default class DataInput extends React.Component {
           </Form>
 
           <div>
-            <TreatmentButtonList />
+            <TreatmentButtonList onClick={this.handleQuickAdd} />
           </div>
         </div>
-        {this.state.dataList.name}
         <Table dataSource={this.state.dataList} columns={columns} />
       </div>
     );
