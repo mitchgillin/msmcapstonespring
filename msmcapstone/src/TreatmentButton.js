@@ -5,14 +5,14 @@ export default class TreatmentButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      treatment: "Advil"
+      treatment: ""
     }
   }
 
 
   render() {
     return (
-            <Button onClick={this.props.onClick}>{this.props.name} </Button>
+      <Button onClick={this.props.onClick}> {this.props.name} </Button>
     )
   }
 

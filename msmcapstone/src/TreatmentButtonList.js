@@ -18,6 +18,23 @@ export default class TreatmentButtonList extends React.Component {
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.setState({ user });
+        var tempButtons = [];
+        const usersRef = firebase.database().ref(this.state.user.displayName + "/buttons");
+        usersRef.on("value", (snapshot) => {
+          if ((snapshot.val()) != null) {
+            tempButtons = [];
+            snapshot.forEach(function (childSnapshot) {
+              // console.log(childSnapshot.val().name);
+              tempButtons.push({
+                name: childSnapshot.val().name
+              })
+            })
+          }
+          this.setState({
+            buttons: tempButtons
+          })
+          console.log(this.state.name);
+        });
 
       }
     })
@@ -26,15 +43,15 @@ export default class TreatmentButtonList extends React.Component {
 
   handleButtonSubmit = (e) => {
     e.preventDefault();
-    let newArray = this.state.buttons.slice();
-    newArray.push(this.state.name);
-    this.setState({
-      buttons: newArray
-    });
+    // let newArray = this.state.buttons.slice();
+    // newArray.push(this.state.name);
+    // this.setState({
+    //   buttons: newArray
+    // });
     console.log(this.state.user);
     const userRef = firebase.database().ref(this.state.user.displayName);
-    userRef.push().set({
-      buttons: newArray
+    userRef.child('buttons').push({
+      name: this.state.name
     });
   }
   handleInputChange = (e) => {
@@ -44,15 +61,15 @@ export default class TreatmentButtonList extends React.Component {
   };
 
   handleTreatmentClick = (button) => {
-    console.log(button.displayName);
+    { this.props.onClick(button) }
   }
 
   render() {
     const listItems = this.state.buttons.map((button) =>
       <TreatmentButton
-        key={button}
-        name={button}
-        onClick={({ button }) => { this.handleTreatmentClick(button) }} />
+        key={Math.random() * 10000}
+        name={button.name}
+        onClick={() => this.handleTreatmentClick(button.name)} />
     );
     return (
 
