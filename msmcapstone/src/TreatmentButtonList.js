@@ -43,11 +43,6 @@ export default class TreatmentButtonList extends React.Component {
 
   handleButtonSubmit = (e) => {
     e.preventDefault();
-    // let newArray = this.state.buttons.slice();
-    // newArray.push(this.state.name);
-    // this.setState({
-    //   buttons: newArray
-    // });
     console.log(this.state.user);
     const userRef = firebase.database().ref(this.state.user.displayName);
     userRef.child('buttons').push({
@@ -74,10 +69,10 @@ export default class TreatmentButtonList extends React.Component {
     return (
 
       <div>
-        <Input onChange={this.handleInputChange} placeholder="Testing" style={{ width: "20%" }} />
+        <Input onChange={this.handleInputChange} style={{ width: "20%" }} />
         <Button onClick={this.handleButtonSubmit} > Create New QuickAdd </Button>
         <div className="TreatmentButtons">
-          <ul> {listItems} </ul>
+          <ul > {listItems} </ul>
         </div>
       </div>
     );

@@ -3,6 +3,8 @@ import MyHeader from "./MyHeader";
 import { Form, Input, Button, Radio, Table } from 'antd';
 import firebase, { auth } from './Firebase.js';
 import TreatmentButtonList from "./TreatmentButtonList.js";
+import MyFooter from "./MyFooter"
+import "./"
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
@@ -29,12 +31,16 @@ export default class DataInput extends React.Component {
     super(props);
     this.state = {
       dataList: [],
-      medications: []
-      , taken: [],
+      medications: [],
+      taken: [],
       newMed: "",
       takenValue: "",
       user: null
     };
+
+
+
+
   }
 
 
@@ -60,13 +66,10 @@ export default class DataInput extends React.Component {
     const usersRef = firebase.database().ref(this.state.user.displayName);
     usersRef.on("value", (snapshot) => {
       if ((snapshot.val()) != null) {
-        // console.log("Snapshot.val()", snapshot.val())
       }
     }
     )
-    // console.log(firebaseData);
     usersRef.child('treatments').push({
-      // treatment: firebaseData
       name: this.state.newMed,
       taken: this.state.takenValue,
       key: Math.random() * 100000,
@@ -74,6 +77,7 @@ export default class DataInput extends React.Component {
     });
     document.getElementById("myForm").reset();
   }
+
 
 
   handleQuickAdd = (name) => {
@@ -127,21 +131,47 @@ export default class DataInput extends React.Component {
   }
 
 
+  handleDelete = () => {
+    console.log("Working");
+    const treatmentRef = firebase.database().ref(this.state.user.displayName + "/treatments");
+    treatmentRef.remove();
+
+    window.location.reload()
+
+  }
 
 
   render() {
+
+    const rowSelection = {
+      onChange: (selectedRowKeys, selectedRows) => {
+        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        console.log(this.state.dataList)
+
+
+
+      },
+      getCheckboxProps: record => ({
+        disabled: record.name === 'Disabled User', // Column configuration not to be checked
+        name: record.name,
+      }),
+    };
+
+
+
+
     return (
       <div>
         <MyHeader />
-        <div className="Input Field">
+        <div className="InputField">
           <Form layout="inline" onSubmit={(e) => this.handleSubmitTreatment(e)} id="myForm">
-            <FormItem>
-              <Input name="newMed" placeholder="Medicaiton" onChange={this.handleChange} />
+            <FormItem >
+              <Input name="newMed" placeholder="Treatment" onChange={this.handleChange} />
             </FormItem>
             <FormItem>
               <RadioGroup name="takenValue" onChange={(e) => this.handleChange(e)} >
-                <Radio value={"yes"} > I have taken this today </Radio>
-                <Radio value={"no"} > I haven't taken this today </Radio>
+                <Radio value={"yes"} > Taken </Radio>
+                <Radio value={"no"} > Not Taken </Radio>
               </RadioGroup>
             </FormItem>
             <FormItem>
@@ -156,8 +186,10 @@ export default class DataInput extends React.Component {
             <TreatmentButtonList onClick={this.handleQuickAdd} />
           </div>
         </div>
-        <Table dataSource={this.state.dataList} columns={columns} />
-      </div>
+        <Button type="danger" onClick={this.handleDelete} > Delete All Entries</Button>
+        <Table rowSelection={rowSelection} dataSource={this.state.dataList} columns={columns} />
+        <MyFooter />
+      </div >
     );
   }
 

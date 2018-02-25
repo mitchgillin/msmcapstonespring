@@ -27,7 +27,7 @@ class MyHeader extends React.Component {
   render() {
     return (
       <div>
-        <h1> <Link to="./" >Perdix Medical </Link> </h1>
+        <h5> <Link to="./" >Perdix Medical </Link> </h5>
         <Menu
           theme="light"
           mode="horizontal"
