@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import { Switch, Route } from 'react-router-dom'; 
+import 'antd/dist/antd.css';
+import { Switch, Route } from 'react-router-dom';
 import Welcome from "./Welcome.js";
 import About from "./About.js";
 import Login from "./Login.js";
@@ -10,8 +11,6 @@ class App extends React.Component {
 
   render() {
     return (
-
-
       < div className="App" >
         <Switch>
           <Route exact path='/' component={Welcome} />
