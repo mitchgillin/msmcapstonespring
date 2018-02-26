@@ -3,7 +3,6 @@ import MyHeader from "./MyHeader";
 import { Form, Input, Button, Radio, Table } from 'antd';
 import firebase, { auth } from './Firebase.js';
 import TreatmentButtonList from "./TreatmentButtonList.js";
-import MyFooter from "./MyFooter"
 import "./"
 
 const FormItem = Form.Item;
@@ -188,7 +187,6 @@ export default class DataInput extends React.Component {
         </div>
         <Button type="danger" onClick={this.handleDelete} > Delete All Entries</Button>
         <Table rowSelection={rowSelection} dataSource={this.state.dataList} columns={columns} />
-        <MyFooter />
       </div >
     );
   }
