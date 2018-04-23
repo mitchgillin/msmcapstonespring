@@ -1,6 +1,6 @@
 import React from 'react';
-import './App.css';
 import 'antd/dist/antd.css';
+import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import Welcome from "./Welcome.js";
 import About from "./About.js";

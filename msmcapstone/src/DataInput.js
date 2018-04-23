@@ -188,7 +188,6 @@ export default class DataInput extends React.Component {
         </div>
         <Button type="danger" onClick={this.handleDelete} > Delete All Entries</Button>
         <Table rowSelection={rowSelection} dataSource={this.state.dataList} columns={columns} />
-        <MyFooter />
       </div >
     );
   }
