@@ -60,7 +60,6 @@ export default class DataVis extends React.Component {
         <VictoryChart theme={VictoryTheme.material} style={{ parent: { maxWidth: "40%" } }}
           padding={{ left: 50, top: 50, right: 50, bottom: 50 }} >
           <VictoryLabel text="Patient Treatment Adherance" x={180} y={30} textAnchor="middle" />
-
           <VictoryLine
             height="50%"
             data={this.state.data[this.state.pNum]}
