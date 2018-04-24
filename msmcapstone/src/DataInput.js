@@ -29,6 +29,7 @@ export default class DataInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      //Refactor into an array of objects
       dataList: [],
       medications: [],
       taken: [],
@@ -48,20 +49,6 @@ export default class DataInput extends React.Component {
 
   handleSubmitTreatment = (e) => {
     e.preventDefault();
-    var newMedications = this.state.medications.slice();
-    newMedications.push(this.state.newMed);
-    var newTaken = this.state.taken.slice();
-    newTaken.push(this.state.takenValue);
-    var newDataList = this.state.dataList.slice();
-    newDataList.push({
-      medications: this.state.newMed,
-      hasTaken: this.state.takenValue,
-      key: this.state.newMed + Math.floor(Math.random() * 1000),
-      date: now.toDateString()
-    });
-    this.setState({
-      dataList: newDataList
-    });
     const usersRef = firebase.database().ref(this.state.user.displayName);
     usersRef.on("value", (snapshot) => {
       if ((snapshot.val()) != null) {
@@ -140,6 +127,13 @@ export default class DataInput extends React.Component {
   }
 
 
+  handleDeleteButtons = () => {
+    const buttonRef = firebase.database().ref(this.state.user.displayName + "/buttons");
+    buttonRef.remove();
+    window.location.reload();
+  }
+
+
   render() {
 
     const rowSelection = {
@@ -185,7 +179,10 @@ export default class DataInput extends React.Component {
             <TreatmentButtonList onClick={this.handleQuickAdd} />
           </div>
         </div>
-        <Button type="danger" onClick={this.handleDelete} > Delete All Entries</Button>
+        <div>
+          <Button type="danger" onClick={this.handleDelete} > Delete All Recorded Treatments</Button>
+          <Button type="danger" onClick={this.handleDeleteButtons}> Delete All Buttons </Button>
+        </div>
         <Table rowSelection={rowSelection} dataSource={this.state.dataList} columns={columns} />
       </div >
     );
