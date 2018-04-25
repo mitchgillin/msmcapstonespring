@@ -25,12 +25,12 @@ export default class UX2Wrapper extends React.Component {
 
   render() {
     return (
-      <div>
+      <div >
         <MyHeader />
         <Ux2Generator addDrugToArray={(obj) => this.addDrugToArray(obj)} />
-        <Row gutter={12}>
+        <Row type="flex" justify="space-around" align="center">
           {this.state.ux2array.map((treatment) =>
-            <Col span={8}>
+            <Col >
               <Ux2
                 name={treatment.name}
                 dailyDose={treatment.dailyDose}

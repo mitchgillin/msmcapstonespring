@@ -50,13 +50,15 @@ export default class Ux2 extends Component {
     return (
       <div className="app">
         <Card
-          style={{ width: 300 }}
-          bodyStyle={this.state.isDone ? { background: "#048e62" } : { background: "#ef8183" }}
+          style={{ width: 300, height: "200", borderRadius: "25px 25px 0px 0px" }}
+          bodyStyle={this.state.isDone ? { background: "#a5ffab", borderRadius: "25px 25px 0px 0px" } : { background: "#ef8183", borderRadius: "25px 25px 0px 0px" }}
           actions={[<Button onClick={this.handleSub}><Icon type="minus" /></Button>, <h1>Doses Taken: {this.state.takenDose}</h1>, <Button onClick={this.handleAdd}> <Icon type="plus" /> </Button>]}
         >
           <Meta
             title={this.props.name}
             description={'Daily Dose: ' + this.state.dailyDose}
+            style={{ color: "red", borderRadius: "0px 0px 25px 25px" }}
+
           />
         </Card>
       </div >

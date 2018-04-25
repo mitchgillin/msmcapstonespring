@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Input, InputNumber } from "antd";
+import { Row, Col, Button, Input, InputNumber } from "antd";
 
 export default class Ux2Generator extends React.Component {
   constructor(props) {
@@ -19,11 +19,13 @@ export default class Ux2Generator extends React.Component {
   render() {
 
     return (
-      <div>
-        <Input name="drugName" size="large" placeholder="Drug Name" onChange={(e) => this.updateState(e)} />
-        <Input name="drugDose" size="large" placeholder="Daily Drug Dose" onChange={(e) => this.updateState(e)} />
-        <Button onClick={() => this.props.addDrugToArray({ name: this.state.drugName, dailyDose: this.state.drugDose, completed: false })}> Add New Treatment </Button>
-      </div>
+      <Row type="flex" align="middle" justify="center" style={{ padding: "20px" }}>
+        <Col style={{ width: "30%", padding: "20px" }}>
+          <Input name="drugName" size="large" placeholder="Drug Name" onChange={(e) => this.updateState(e)} />
+          <Input name="drugDose" size="large" placeholder="Daily Drug Dose" onChange={(e) => this.updateState(e)} />
+        </Col>
+        <Button type="primary" style={{ background: "#a5ffab", color: "black" }} onClick={() => this.props.addDrugToArray({ name: this.state.drugName, dailyDose: this.state.drugDose, completed: false })}> Add New Treatment </Button>
+      </Row >
     )
   }
 }
