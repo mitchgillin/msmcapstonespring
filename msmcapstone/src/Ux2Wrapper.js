@@ -1,5 +1,6 @@
 import React from "react"
 import Ux2 from "/Users/mitchellgillin/Desktop/msmcapstonespring/msmcapstone/src/Ux2.js"
+import Ux2Generator from "./Ux2Generator.js"
 import MyHeader from "./MyHeader.js";
 
 export default class UX2Wrapper extends React.Component {
@@ -7,8 +8,17 @@ export default class UX2Wrapper extends React.Component {
     super(props);
     this.state = {
       //{name,dailyDose,completed}
-      ux2array: [{ name: "advil", dailyDose: 4, completed: false }, { name: "Vicodin", dailyDose: 2, completed: false }]
+      ux2array: [{ name: "Advil", dailyDose: 4, completed: false }, { name: "Vicodin", dailyDose: 2, completed: false }]
     }
+  }
+
+  addDrugToArray = (drugDetails) => {
+    let ux2arrayTemp = this.state.ux2array.slice();
+    ux2arrayTemp.push(drugDetails);
+    console.log(ux2arrayTemp);
+    this.setState({
+      ux2array: ux2arrayTemp
+    })
   }
 
 
@@ -16,6 +26,7 @@ export default class UX2Wrapper extends React.Component {
     return (
       <div>
         <MyHeader />
+        <Ux2Generator addDrugToArray={(obj) => this.addDrugToArray(obj)} />
         {this.state.ux2array.map((treatment) =>
           <Ux2
             name={treatment.name}

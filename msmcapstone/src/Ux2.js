@@ -9,22 +9,22 @@ export default class Ux2 extends Component {
     this.state = {
       takenDose: 0,
       dailyDose: this.props.dailyDose,
-      showSubIcon: false,
-      showPlusIcon: false
+      isDone: false
     }
   }
+
 
 
   handleAdd = () => {
     if (this.state.takenDose < this.state.dailyDose) {
       this.setState({
-        showPlusIcon: false,
-        takenDose: this.state.takenDose + 1
+        takenDose: this.state.takenDose + 1,
+        isDone: false
       })
     }
-    else {
+    if (this.state.takenDose == this.state.dailyDose - 1) {
       this.setState({
-        showPlutIcon: true
+        isDone: true
       })
     }
   }
@@ -35,25 +35,29 @@ export default class Ux2 extends Component {
         showSubIcon: false,
         takenDose: this.state.takenDose - 1
       })
-    }
-    else {
-      this.setState({
-        showSubIcon: true
-      })
+      if (this.state.takenDose < this.state.dailyDose + 1) {
+        this.setState({
+          isDone: false
+        })
+      }
     }
   }
 
 
   render() {
+    const { Meta } = Card;
+
     return (
       <div className="app">
-        <Card style={{ width: 500 }}>
-          <div>
-            <Button onClick={this.handleSub}><Icon type="minus" /></Button>
-            <h1>{this.props.name} </h1> <h1>{this.props.dailyDose}</h1> <h1>{this.state.takenDose}</h1>
-            <Button onClick={this.handleAdd}> <Icon type="plus" /> </Button>
-            <Alert showIcon={this.state.showSubIcon} message="Error Text" />
-          </div>
+        <Card
+          style={{ width: 300 }}
+          bodyStyle={this.state.isDone ? { background: "#048e62" } : { background: "#ef8183" }}
+          actions={[<Button onClick={this.handleSub}><Icon type="minus" /></Button>, <h1>Doses Taken: {this.state.takenDose}</h1>, <Button onClick={this.handleAdd}> <Icon type="plus" /> </Button>]}
+        >
+          <Meta
+            title={this.props.name}
+            description={'Daily Dose: ' + this.state.dailyDose}
+          />
         </Card>
       </div >
     )
