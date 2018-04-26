@@ -10,9 +10,16 @@ export default class Ux2Generator extends React.Component {
     }
   }
 
-  updateState = (e) => {
+  updateName = (e) => {
     this.setState({
       [e.target.name]: e.target.value
+    })
+  }
+
+  updateDose = (e) => {
+    console.log(e);
+    this.setState({
+      drugDose: e
     })
   }
 
@@ -21,10 +28,10 @@ export default class Ux2Generator extends React.Component {
     return (
       <Row type="flex" align="middle" justify="center" style={{ padding: "20px" }}>
         <Col style={{ width: "30%", padding: "20px" }}>
-          <Input name="drugName" size="large" placeholder="Drug Name" onChange={(e) => this.updateState(e)} />
-          <Input name="drugDose" size="large" placeholder="Daily Drug Dose" onChange={(e) => this.updateState(e)} />
+          <Input name="drugName" id="drugName" size="large" placeholder="Drug Name" onChange={(e) => this.updateName(e)} />
+          <InputNumber min={0} name="drugDose" size="large" placeholder="Daily Drug Dose" onChange={(e) => this.updateDose(e)} />
         </Col>
-        <Button type="primary" style={{ background: "#a5ffab", color: "black" }} onClick={() => this.props.addDrugToArray({ name: this.state.drugName, dailyDose: this.state.drugDose, completed: false })}> Add New Treatment </Button>
+        <Button type="primary" style={{}} onClick={() => this.props.addDrugToArray({ name: this.state.drugName, dailyDose: this.state.drugDose, completed: false })}> Add New Treatment </Button>
       </Row >
     )
   }

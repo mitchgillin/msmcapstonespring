@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css"
 import 'antd/dist/antd.css'
-import { Alert, Icon, Card, Button } from "antd";
+import { Row, Alert, Icon, Card, Button } from "antd";
 
 export default class Ux2 extends Component {
   constructor(props) {
@@ -13,6 +13,13 @@ export default class Ux2 extends Component {
     }
   }
 
+  componentDidMount = () => {
+    if (this.state.takenDose === this.state.dailyDose) {
+      this.setState({
+        isDone: true
+      })
+    }
+  }
 
 
   handleAdd = () => {
@@ -50,12 +57,11 @@ export default class Ux2 extends Component {
     return (
       <div className="app">
         <Card
-          extra={<Button onClick={(name) => this.props.removeDrugFromArray(this.props.name)}> <Icon type="close" /> </Button>}
           style={{ width: 300, height: "200", borderRadius: "25px 25px 0px 0px" }}
           bodyStyle={this.state.isDone ? { background: "#a5ffab", borderRadius: "25px 25px 0px 0px" } : { background: "#ef8183", borderRadius: "25px 25px 0px 0px" }}
           actions={[<Button onClick={this.handleSub}><Icon type="minus" /></Button>, <h1>Doses Taken: {this.state.takenDose}</h1>, <Button onClick={this.handleAdd}> <Icon type="plus" /> </Button>]}
         >
-
+          <Button type="danger" style={{ display: "flex", align: "right" }} onClick={(name) => this.props.removeDrugFromArray(this.props.name)}> <Icon type="close" /> </Button>
           <Meta
             title={this.props.name}
             description={'Daily Dose: ' + this.state.dailyDose}

@@ -23,7 +23,6 @@ export default class UX2Wrapper extends React.Component {
   }
 
   removeDrugFromArray = (drugName) => {
-    console.log(drugName);
     let removedArray = this.state.ux2array.filter(function (el) {
       return el.name !== drugName;
     });
@@ -42,6 +41,7 @@ export default class UX2Wrapper extends React.Component {
           {this.state.ux2array.map((treatment) =>
             <Col >
               <Ux2
+                key={treatment.name + treatment.dailyDose}
                 name={treatment.name}
                 dailyDose={treatment.dailyDose}
                 completed={treatment.completed}
