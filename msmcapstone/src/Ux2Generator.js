@@ -27,9 +27,9 @@ export default class Ux2Generator extends React.Component {
 
     return (
       <Row type="flex" align="middle" justify="center" style={{ padding: "20px" }}>
-        <Col style={{ width: "30%", padding: "20px" }}>
+        <Col style={{ width: "70%", padding: "20px" }}>
           <Input name="drugName" id="drugName" size="large" placeholder="Drug Name" onChange={(e) => this.updateName(e)} />
-          <InputNumber min={0} name="drugDose" size="large" placeholder="Daily Drug Dose" onChange={(e) => this.updateDose(e)} />
+          <InputNumber min={0} name="drugDose" size="large" placeholder="Daily Dose" onChange={(e) => this.updateDose(e)} />
         </Col>
         <Button type="primary" style={{}} onClick={() => this.props.addDrugToArray({ name: this.state.drugName, dailyDose: this.state.drugDose, completed: false })}> Add New Treatment </Button>
       </Row >

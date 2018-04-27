@@ -19,7 +19,10 @@ export default class Ux2 extends Component {
         isDone: true
       })
     }
+
+
   }
+
 
 
   handleAdd = () => {
@@ -28,12 +31,15 @@ export default class Ux2 extends Component {
         takenDose: this.state.takenDose + 1,
         isDone: false
       })
+      this.props.updateCompletedDose(this.props.name, this.state.takenDose + 1);
+
     }
     if (this.state.takenDose == this.state.dailyDose - 1) {
       this.setState({
         isDone: true
       })
     }
+
   }
 
   handleSub = () => {
@@ -42,18 +48,21 @@ export default class Ux2 extends Component {
         showSubIcon: false,
         takenDose: this.state.takenDose - 1
       })
-      if (this.state.takenDose < this.state.dailyDose + 1) {
-        this.setState({
-          isDone: false
-        })
-      }
+      this.props.updateCompletedDose(this.props.name, this.state.takenDose - 1);
+
     }
+    if (this.state.takenDose < this.state.dailyDose + 1) {
+      this.setState({
+        isDone: false
+      })
+    }
+
   }
 
 
   render() {
-    const { Meta } = Card;
 
+    const { Meta } = Card;
     return (
       <div className="app">
         <Card
@@ -61,7 +70,7 @@ export default class Ux2 extends Component {
           bodyStyle={this.state.isDone ? { background: "#a5ffab", borderRadius: "25px 25px 0px 0px" } : { background: "#ef8183", borderRadius: "25px 25px 0px 0px" }}
           actions={[<Button onClick={this.handleSub}><Icon type="minus" /></Button>, <h1>Doses Taken: {this.state.takenDose}</h1>, <Button onClick={this.handleAdd}> <Icon type="plus" /> </Button>]}
         >
-          <Button type="danger" style={{ display: "flex", align: "right" }} onClick={(name) => this.props.removeDrugFromArray(this.props.name)}> <Icon type="close" /> </Button>
+          <Button type="danger" style={{ display: "flex", justifyContent: "flex-end" }} onClick={(name) => this.props.removeDrugFromArray(this.props.name)}> <Icon type="close" /> </Button>
           <Meta
             title={this.props.name}
             description={'Daily Dose: ' + this.state.dailyDose}
