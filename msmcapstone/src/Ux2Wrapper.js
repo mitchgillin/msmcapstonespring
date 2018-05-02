@@ -11,7 +11,7 @@ export default class UX2Wrapper extends React.Component {
     this.state = {
       //{name,dailyDose,completed}
       percentCompletion: 0,
-      ux2array: [{ name: "Advil", dailyDose: 4, completedDose: 0 }, { name: "Vicodin", dailyDose: 2, completedDose: 0 }]
+      ux2array: []
     }
   }
 

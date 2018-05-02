@@ -26,8 +26,8 @@ export default class Ux2Generator extends React.Component {
   render() {
 
     return (
-      <Row type="flex" align="middle" justify="center" style={{ padding: "20px" }}>
-        <Col style={{ width: "70%", padding: "20px" }}>
+      <Row type="flex" align="middle" style={{ padding: "20px" }}>
+        <Col >
           <Input name="drugName" id="drugName" size="large" placeholder="Drug Name" onChange={(e) => this.updateName(e)} />
           <InputNumber min={0} name="drugDose" size="large" placeholder="Daily Dose" onChange={(e) => this.updateDose(e)} />
         </Col>

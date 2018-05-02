@@ -28,7 +28,7 @@ export default class Logininout extends React.Component {
 
   logout = () => {
     auth.signOut().then(() => { this.setState({ user: null }) })
-
+    window.location.reload();
 
   }
 
