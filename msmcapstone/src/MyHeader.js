@@ -27,7 +27,7 @@ class MyHeader extends React.Component {
   render() {
     return (
       <div>
-        <h1> <Link to="./" >Perdix Medical </Link> </h1>
+        <h1 style={{ display: "flex", textAlign: "center" }}> <Link to="./" >Perdix Medical </Link> </h1>
         <Menu
           theme="light"
           mode="horizontal"
@@ -39,10 +39,12 @@ class MyHeader extends React.Component {
           )
             : null}
           <Menu.Item key="5" > <Link to="./datavis" > Data Visualization </Link></Menu.Item>
+          <Menu.Item key="6" > <Link to="./ux2" > UX2.0 </Link> </Menu.Item>
           <Menu.Item key="4" > <Loginout /> </Menu.Item>
 
+
         </Menu>
-      </div>
+      </div >
     )
   }
 

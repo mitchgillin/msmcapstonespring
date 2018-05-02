@@ -33,7 +33,15 @@ export default class DataVis extends React.Component {
       { x: "W", y: .98 },
       { x: "Th", y: .75 },
       { x: "F", y: .30 },
-      { x: "S", y: .67 }]
+      { x: "S", y: .67 }],
+
+      [{ x: "Su", y: 1 },
+      { x: "M", y: .75 },
+      { x: "T", y: .66 },
+      { x: "W", y: .50 },
+      { x: "Th", y: .35 },
+      { x: "F", y: .25 },
+      { x: "S", y: .10 }]
       ]
     }
   }
@@ -63,7 +71,7 @@ export default class DataVis extends React.Component {
           <VictoryLine
             height="50%"
             data={this.state.data[this.state.pNum]}
-            domain={{ y: [0, 1] }}
+            domain={{ y: [0, 1.1] }}
 
           />
         </VictoryChart>
